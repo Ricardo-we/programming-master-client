@@ -1,0 +1,22 @@
+.modal-overlay {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--overlay);
+	/* z-index: 1000; */
+}
+
+.modal-content {
+	max-width: 800px;
+	min-width: 200px;
+}
+
+.close-modal-button {
+	align-self: flex-start;
+}

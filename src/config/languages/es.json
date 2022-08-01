@@ -1,0 +1,19 @@
+{
+    "labels": {
+        "close": "Cerrar",
+        "open": "Abrir",
+        "delete_": "Eliminar",
+        "get": "Conseguir",
+        "confirm": "Confirmar",
+        "back": "Regresar",
+        "cancel": "Cancelar",
+        "edit": "Editar"
+    },
+    "modules": {
+        "login": {
+            "title": "Login",
+            "email": "Email",
+            "password": "Contraseña"
+        }
+    }
+}
