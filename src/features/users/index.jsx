@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 
 import AutoForm from "../../components/AutoForm";
 import UserService from "../../services/user.service";
-import { useAuth } from "../../hooks-contexts/AuthContext";
 import CustomLink from "../../components/CustomLink"
+import { useAuth } from "../../hooks-contexts/AuthContext";
+import { useLanguage } from "../../hooks-contexts/LanguageContext";
 
 function Login({ onLoginSuccess = () => { } }) {
     const userService = UserService();
     const { user, setUser } = useAuth();
+    const { language } = useLanguage();
 
     const formFields = [
         {
