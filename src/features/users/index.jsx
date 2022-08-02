@@ -7,7 +7,7 @@ import UserService from "../../services/user.service";
 import { useAuth } from "../../hooks-contexts/AuthContext";
 import CustomLink from "../../components/CustomLink"
 
-function Login() {
+function Login({ onLoginSuccess = () => { } }) {
     const userService = UserService();
     const { user, setUser } = useAuth();
 
@@ -37,7 +37,11 @@ function Login() {
                 initialValues={{ email: undefined, password: undefined }}
                 onSubmit={data => {
                     return userService.authenticate(data)
-                        .then(res => setUser(res.data))
+                        .then(res => {
+                            setUser(res.data)
+                            toast.success("Logged in successfully")
+                            onLoginSuccess();
+                        })
                         .catch(error => toast.error(error?.response?.data?.error?.message))
                 }}
                 fields={formFields}

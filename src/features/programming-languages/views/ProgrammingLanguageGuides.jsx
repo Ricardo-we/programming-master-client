@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Heading, Box, Text } from "grommet";
 
 import ProgrammingLanguagesService from "../../../services/programming-languages.service";
@@ -21,7 +21,6 @@ function ProgrammingLanguageGuides({ }) {
 
     return (
         <>
-            <ToastContainer />
             <Heading level="1" margin="auto">{guides?.programming_language?.name}</Heading>
             <style>{`
                 .custom-link{

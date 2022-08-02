@@ -30,9 +30,10 @@ function Guide({ }) {
             })
             .catch(error => {
                 toast.error(error?.response?.data?.error?.message)
-                if (!user?.token) {
-                    setModalVisible(true)
-                }
+                if (!user.token)
+                    return setModalVisible(true)
+                return navigate("/programming-languages/guides")
+
             })
 
     }, []);
@@ -40,7 +41,13 @@ function Guide({ }) {
 
     return (
         <>
-            <ModalLogin visible={modalVisible} handleClose={() => setModalVisible(false)} />
+            <ModalLogin
+                visible={modalVisible}
+                handleClose={() => {
+                    setModalVisible(false)
+                    navigate(-1)
+                }}
+            />
             <style>{`
             .tutorial-link {
                 color: var(--primary);

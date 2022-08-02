@@ -1,4 +1,4 @@
-import { createContext, useContext, useLayoutEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useJsonStorage } from "./useLocalStorage";
 import AppTranslationsService from "../services/app-translations";
 import { useAuth } from "./AuthContext";
@@ -10,12 +10,15 @@ function LanguageProvider({ children }) {
     const { user } = useAuth();
     const [language, setLanguage] = useJsonStorage("flowex-cli-language-config");
 
-    useLayoutEffect(() => {
-        languageService.get_(1, {
-            params: user?.language_code || window.navigator.languages[0]
-        })
-            .then(res => setLanguage(res.data));
-    }, [language])
+    useEffect(() => {
+        if (!language && !localStorage.getItem("flowex-cli-language-config")) {
+            const userLanguage = user?.language_code?.code?.toLowerCase() || window.navigator.languages[1];
+            languageService.get_(1, {
+                params: { language_code: userLanguage }
+            })
+                .then(res => setLanguage(res.data));
+        }
+    }, [user?.language_code])
 
     return <LanguageContext.Provider value={{ language, setLanguage }}>
         {children}

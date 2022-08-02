@@ -10,7 +10,12 @@ function ModalLogin({ visible = false, handleClose }) {
         <AnimatePresence>
             {visible &&
                 <Modal handleClose={handleClose} contentStyle={styles.contentStyle}>
-                    <Login />
+                    <Login
+                        onLoginSuccess={() => {
+                            handleClose()
+                            window.location.reload();
+                        }}
+                    />
                 </Modal>
             }
         </AnimatePresence>

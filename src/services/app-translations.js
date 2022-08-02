@@ -1,7 +1,7 @@
 import BaseService from "../utils/BaseService";
 
 const AppTranslationsService = () => {
-	const ENDPOINT = "app-translation";
+	const ENDPOINT = "app-translations";
 	const service = new BaseService(ENDPOINT);
 
 	const get_ = async (params, options = {}) => {
