@@ -1,7 +1,8 @@
-import { useContext, useState, useEffect, createContext } from "react";
+import { useContext, useEffect, createContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useJsonStorage } from "./useLocalStorage";
+import { getAuthTokenHeaders } from "../utils/request-utils";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext({});
@@ -29,8 +30,14 @@ function useAuth() {
     return useContext(AuthContext);
 }
 
+function useUserReqConfig(config) {
+    const { user } = useAuth();
+    return { ...config, headers: getAuthTokenHeaders(user) }
+}
+
 export {
     AuthContext,
     AuthProvider,
-    useAuth
+    useAuth,
+    useUserReqConfig
 }

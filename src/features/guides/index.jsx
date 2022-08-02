@@ -6,13 +6,14 @@ import { toast } from "react-toastify";
 import GuidesService from "../../services/guides.service";
 import MdViewer from "../../components/displayers/MdViewer";
 import CustomLink from "../../components/CustomLink";
-import { useAuth } from "../../hooks-contexts/AuthContext";
+import { useAuth, useUserReqConfig } from "../../hooks-contexts/AuthContext";
 import ModalLogin from "../users/components/ModalLogin";
 
 function Guide({ }) {
-    const { id } = useParams();
+    const { id, programmingLanguageId } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth()
+    const reqBaseConfig = useUserReqConfig();
 
     const [modalVisible, setModalVisible] = useState(false);
     const [guide, setGuides] = useState({});
@@ -21,8 +22,8 @@ function Guide({ }) {
 
     useLayoutEffect(() => {
         Promise.all([
-            guidesRequest.get_(id),
-            guidesRequest.getGuideTutorials(id)
+            guidesRequest.get_(id, reqBaseConfig),
+            guidesRequest.getGuideTutorials(id, reqBaseConfig)
         ])
             .then(results => {
                 setGuides(results[0].data);
@@ -32,7 +33,7 @@ function Guide({ }) {
                 toast.error(error?.response?.data?.error?.message)
                 if (!user.token)
                     return setModalVisible(true)
-                return navigate("/programming-languages/guides")
+                return navigate("/programming-languages/guides/" + programmingLanguageId)
 
             })
 
@@ -45,7 +46,8 @@ function Guide({ }) {
                 visible={modalVisible}
                 handleClose={() => {
                     setModalVisible(false)
-                    navigate(-1)
+                    navigate("/programming-languages/guides/" + programmingLanguageId)
+                    window.location.reload()
                 }}
             />
             <style>{`

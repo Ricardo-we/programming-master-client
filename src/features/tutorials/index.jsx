@@ -11,6 +11,7 @@ import TutorialService from "../../services/tutorial.service";
 import GuidesService from "../../services/guides.service";
 import MdViewer from "../../components/displayers/MdViewer";
 import CustomLink from "../../components/CustomLink";
+import { useUserReqConfig } from "../../hooks-contexts/AuthContext";
 import { toast } from "react-toastify";
 
 
@@ -19,6 +20,7 @@ function Tutorial() {
     const navigate = useNavigate();
     const tutorialsRequest = TutorialService();
     const guidesRequest = GuidesService();
+    const reqConfig = useUserReqConfig();
 
     const [code, setCode] = useState("");
     const [tutorial, setTutorial] = useState({});
@@ -26,15 +28,11 @@ function Tutorial() {
 
     const programmingLanguageInfo = guideTutorials?.guide?.programming_language;
 
-    useLayoutEffect(() => {
-        getGuideAndTutorials()
-    }, [id])
-
     const getGuideAndTutorials = useCallback(() => {
-        tutorialsRequest.get_(id)
+        tutorialsRequest.get_(id, reqConfig)
             .then(tutorial => {
                 setTutorial(tutorial.data)
-                return guidesRequest.getGuideTutorials(tutorial?.data?.guide.id);
+                return guidesRequest.getGuideTutorials(tutorial?.data?.guide.id, reqConfig);
             })
             .then(guideTutorials_ => setGuideTutorials(guideTutorials_.data))
             .catch(error => {
@@ -44,6 +42,9 @@ function Tutorial() {
 
     }, [id])
 
+    useLayoutEffect(() => {
+        getGuideAndTutorials()
+    }, [id])
 
     return (
         <Box direction="column" align="center" justify="evenly">

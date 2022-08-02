@@ -11,10 +11,7 @@ function ModalLogin({ visible = false, handleClose }) {
             {visible &&
                 <Modal handleClose={handleClose} contentStyle={styles.contentStyle}>
                     <Login
-                        onLoginSuccess={() => {
-                            handleClose()
-                            window.location.reload();
-                        }}
+                        onLoginSuccess={handleClose}
                     />
                 </Modal>
             }
