@@ -22,6 +22,23 @@ function BaseLayout({ children }) {
 
     return (
         <Grommet style={{ position: "relative" }} full>
+            <style>{`
+                .sidebar-link {
+                    padding: 10px;
+                    color: black;
+                }
+
+                .programming-lang-link {
+                    transition: 500ms;
+                    width: 100%;
+                    height: 100%;
+                    padding: 10px;
+                }
+
+                .programming-lang-link:hover {
+                    background-color: var(--primary-translucid);
+                }
+            `}</style>
             <ToastContainer />
             <PageHead title="Programming master" />
             <NavBar>
@@ -37,27 +54,24 @@ function BaseLayout({ children }) {
                 </CustomLink>
                 <SimpleAccordion
                     style={{ width: "100%", padding: "6px" }}
-                    panels={[
-                        {
-                            label: "Programming languages",
-                            content: (
-                                <>
-                                    {programmingLanguages?.map(
-                                        (programmingLang) => (
-                                            <CustomLink
-                                                to={
-                                                    "/programming-languages/guides/" +
-                                                    programmingLang?.id
-                                                }
-                                            >
-                                                {programmingLang?.name}
-                                            </CustomLink>
-                                        ),
-                                    )}
-                                </>
-                            ),
-                        },
-                    ]}
+                    title="Programming Languages"
+                    panels={
+                        programmingLanguages?.map(
+                            (programmingLang) => ({
+                                content: (
+                                    <CustomLink
+                                        to={
+                                            "/programming-languages/guides/" +
+                                            programmingLang?.id
+                                        }
+                                        className="programming-lang-link"
+                                    >
+                                        {programmingLang?.name}
+                                    </CustomLink>
+                                )
+                            }),
+                        )
+                    }
                 />
                 <CustomLink to="/login" className="sidebar-link">
                     Sign in
